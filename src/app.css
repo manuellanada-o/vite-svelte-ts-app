@@ -1,0 +1,48 @@
+:root {
+  --blockDimension: 32px;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+}
+
+#app {
+  margin: 0 auto;
+  text-align: center;
+}
+
+div.block {
+  margin: 0 auto;
+  width: var(--blockDimension);
+  height: var(--blockDimension);
+  box-sizing: border-box;
+  background-color: #eee;
+  border: 1px solid #fff;
+  display: flex
+}
+
+div.row {
+  display: flex;
+}
+
+div.snake {
+  margin: 0 auto;
+  width: var(--blockDimension);
+  height: var(--blockDimension);
+  box-sizing: border-box;
+  background-color: lime;
+  border: 1px solid #fff;
+  display: flex
+}
+
+div.apple {
+  margin: 0 auto;
+  width: var(--blockDimension);
+  height: var(--blockDimension);
+  box-sizing: border-box;
+  background-color: red;
+  border: 1px solid #fff;
+  display: flex
+}
