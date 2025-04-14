@@ -11,40 +11,28 @@
             ? ~~(height / blockDimensions)
             : ~~(height / blockDimensions) - 1;
     let direction = "";
+    let gameStarted = false;
+
     const getDirection = (e: any) => {
-        const snakeX = parseInt(snake[0].split(",")[0]);
-        const snakeY = parseInt(snake[0].split(",")[1]);
-        const targetX = parseInt(e.target.id.split(",")[0]);
-        const targetY = parseInt(e.target.id.split(",")[1]);
-        switch (direction) {
-            case "right":
-                if (targetX < snakeX) {
-                    direction = "up";
-                } else if (targetX > snakeX) {
-                    direction = "down";
-                }
-                break;
-            case "left":
-                if (targetX > snakeX) {
-                    direction = "up";
-                } else if (targetX > snakeX) {
-                    direction = "down";
-                }
-                break;
-            case "up":
-                if (targetY < snakeY) {
-                    direction = "left";
-                } else if (targetY > snakeY) {
-                    direction = "right";
-                }
-                break;
-            case "down":
-                if (targetY > snakeY) {
-                    direction = "left";
-                } else if (targetY > snakeY) {
-                    direction = "right";
-                }
-                break;
+        const snakeY = parseInt(snake[0].split(",")[0]);
+        const snakeX = parseInt(snake[0].split(",")[1]);
+        const targetY = parseInt(e.target.id.split(",")[0]);
+        const targetX = parseInt(e.target.id.split(",")[1]);
+        const getYDistance = Math.abs(snakeY - targetY);
+        const getXDistance = Math.abs(snakeX - targetX);
+        
+        if (getYDistance > getXDistance) {
+            if (snakeY > targetY) {
+                direction = "up";
+            } else {
+                direction = "down";
+            }
+        } else {
+            if (snakeX > targetX) {
+                direction = "left";
+            } else {
+                direction = "right";
+            }
         }
     };
 
@@ -62,7 +50,6 @@
     let apple = [getRandomApple()];
     let intervalId: number | undefined = undefined;
     let speedInterval = 500;
-    let gameStarted = false;
 
     const startInterval = (speedInterval: number) => {
         gameStarted = true;
@@ -130,6 +117,12 @@
         }
     });
 
+    window.addEventListener("mousedown", (e: any) => {
+        if (!gameStarted) {
+            startInterval(speedInterval);
+        }
+    });
+
     window.addEventListener("keydown", (e) => {
         switch (e.key) {
             case "ArrowUp":
@@ -162,7 +155,7 @@
                         : apple.includes(`${i},${j}`)
                           ? "apple"
                           : "block"}
-                    onclick={getDirection}
+                    onmousedown={getDirection}
                 ></div>
             {/each}
         </div>
